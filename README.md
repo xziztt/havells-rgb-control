@@ -7,12 +7,17 @@ Requires Python 3.10+ and access to the bulb's LAN. Tested with Tuya protocol 3.
 
 ## 1. Install
 
-Run from the repository directory:
+Clone the repository, then install:
 
 ```bash
+git clone https://github.com/xziztt/havells-rgb-control.git
+cd havells-rgb-control
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
+
+This installs [TinyTuya](https://github.com/jasonacox/tinytuya), the Python library
+used for discovery, key retrieval, and local bulb control. No separate install is needed.
 
 ## 2. Find the device ID
 
@@ -26,24 +31,29 @@ the same network and run:
 Note the bulb's **Device ID**, **IP address**, and **Version**. Scanning does not
 retrieve the local key.
 
-## 3. Get the local key
+## 3. Link the Tuya project and get the key
 
-1. Sign into [Tuya's developer platform](https://iot.tuya.com/).
-2. Create a cloud project with the **Smart Home** development method and a data
-   center serving your phone-app account's region.
-3. Open **Devices → Link Tuya App Account → Add App Account**.
-4. Scan the QR code with Tuya Smart/Smart Life and approve the link.
-5. Confirm the bulb appears. Enable/authorize **IoT Core** and **Authorization**
-   API services if required.
+1. Create an account or sign into [Tuya's developer platform](https://iot.tuya.com/)
+   (it may redirect to `platform.tuya.com`).
+2. Open **Cloud → Development / Project Management → Create Cloud Project**.
+   Choose **Smart Home** and a data center serving your phone-app account's region.
+3. Inside the project, open **Devices → Link Tuya App Account → Add App Account**
+   to display a QR code.
+4. Open the QR scanner in **Tuya Smart/Smart Life** (usually under **Me** or **+**),
+   using the account containing your bulb. Scan the code and approve the link.
+5. Refresh the project's device list and confirm the bulb appears. Under
+   **Service API**, enable/authorize **IoT Core** and **Authorization** if required.
 6. Run:
 
    ```bash
    .venv/bin/python -m tinytuya wizard
    ```
 
-Enter the project's **Access ID**, **Access Secret**, **data-center region code**,
-and the bulb's **Device ID**. The wizard saves the local key in `devices.json`
-in your current directory. If no devices appear, check the project's data center.
+Find **Access ID/Client ID** and **Access Secret/Client Secret** on the project's
+**Overview** page. Enter these in the wizard, along with the project's
+**data-center region code** and the bulb's **Device ID** from the scan or device list.
+The wizard saves the local key in `devices.json` in your current directory.
+If no devices appear, check the project's data center. Portal labels can vary.
 
 Keep credentials private. Re-pairing can change the key and device ID. The cloud
 is used for this setup step; controller commands use the LAN.
