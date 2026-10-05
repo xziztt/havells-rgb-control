@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Havells TW+RGB",
+    "id": "YOUR_DEVICE_ID",
+    "key": "YOUR_LOCAL_KEY",
+    "ip": "192.168.7.6",
+    "version": 3.5
+  }
+]
